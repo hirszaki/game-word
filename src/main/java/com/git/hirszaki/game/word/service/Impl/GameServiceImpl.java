@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * Created by RENT on 2017-09-28.
  */
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
     @Autowired
     private GameRepository gameRepository;
 
@@ -32,23 +32,28 @@ public class GameServiceImpl implements GameService{
          */
 
 
-
         Game game = new Game();
         game.setWord(word);
         game.setTime(LocalDateTime.now());
 
-        gameRepository.save(game);
 
-        //// TODO: 2017-09-28 zapisywanie slowa do bazy gdy pasuje do domina
+        if (gameRepository.findAll().isEmpty()) {
+            gameRepository.save(game);
+        } else if
+                (gameRepository.findFirstByOrderByTimeDesc().getWord().endsWith(word.substring(0,1))){
+            gameRepository.save(game);
+            } else {
+                throw new RuntimeException("The word does not match to our domino");
+            }
+        }
+
+
+        @Override
+        public List<String> findAllWords () {
+
+            return gameRepository.findAll().stream()
+                    .sorted(Comparator.comparing(Game::getTime))
+                    .map(Game::getWord)
+                    .collect(Collectors.toList());
+        }
     }
-
-    @Override
-    public List<String> findAllWords() {
-
-        // TODO: 2017-09-28 wyświetlanie wszystkich slow w kolejnosci dodania
-        return gameRepository.findAll().stream()
-                .sorted(Comparator.comparing(Game::getTime))
-                .map(Game::getWord)
-                .collect(Collectors.toList());
-    }
-}
