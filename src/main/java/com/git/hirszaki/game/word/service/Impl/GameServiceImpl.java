@@ -23,12 +23,15 @@ public class GameServiceImpl implements GameService {
     public void addWord(String word) {
 
         /**
-         * 1. Pobierz ostatnie dodane słowo
-         * 2. Sprawdź czy istnieje, czyli czy nie dodajesz pierwszego słowa
-         * 3. jeśli to pierwsze słowo, to zapisz
-         * 4. Wpp sprawdź czy pasuje do domina.
-         * 5. Jeśli nie pasuje, rzuć wyjątek throw new RuntimeException("nie pasuje")
-         * 6. wpp zapisz
+         * 1. Dodaj klasę User, która będzie @Entity
+         * 2. Niech implementuje UserDetails
+         * 3. Zaimplementuj UserDetailsService, NIE annotuj go @Service
+         * 4. Dodaj WebSecurityConfigAdapter, skonfiguruj go jak na GH - form login itp
+         * 5. W tym adapterze stwórz beana UserDetailsServiceImpl
+         * 6. Stwórz stronkę do logowania (też GH)
+         * 7. Dodaj filtrowanie przy wyszukiwaniu słów, aby wyszukiwał tylko słowa,
+         *      aktualnie zalogowanego użytkownika
+     *          (por. SecurityContextHolder.getContext().getAuthentication())
          */
 
 
